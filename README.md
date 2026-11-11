@@ -34,3 +34,10 @@ Dot notation follows Cisco's convention: three groups of **four** hex digits (`a
 Mixed separators within a single string (`aa:bb-cc:dd:ee:ff`) are also rejected for the same reason — a MAC with mixed separators is almost always a copy-paste error, not a valid address in distress.
 
 All formatted output is uppercase, matching the display convention used by virtually every network tool. If you need round-trip case preservation, work with the parsed `MACAddress` object rather than re-parsing formatted strings.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
